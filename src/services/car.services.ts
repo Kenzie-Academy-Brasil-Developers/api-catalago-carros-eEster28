@@ -1,33 +1,31 @@
 import { prisma } from "../database/prisma"
-import { TCarCreateSchema, TCarSchema, TCarUpdateSchema } from "../interfaces/car.interfaces"
+import { TCarCreate, TCarBody, TCarUpdate } from "../interfaces/car.interfaces"
 import { carSchema } from "../schemas/car.schemas"
-import { injectable } from "tsyringe"
 
-@injectable()
 export class CarServices{
 
-    createCar = async (body: TCarCreateSchema): Promise<TCarSchema> => {
+    createCar = async (body: TCarCreate): Promise<TCarBody> => {
 
         const newCar = await prisma.car.create({ data: body })
 
         return carSchema.parse(newCar)
     }
 
-    getCars = async (): Promise<Array<TCarSchema>> => {
+    getCars = async (): Promise<Array<TCarBody>> => {
 
         const carList = await prisma.car.findMany()
 
         return carSchema.array().parse(carList)
     }
 
-    getOneCar = async (carId: string): Promise<TCarSchema> => {
+    getOneCar = async (carId: string): Promise<TCarBody> => {
 
         const getCar = await prisma.car.findFirst({ where: {id: carId}})
 
         return carSchema.parse(getCar)
     }
 
-    updateCar = async (body: TCarUpdateSchema, carId: string): Promise<TCarSchema> => {
+    updateCar = async (body: TCarUpdate, carId: string): Promise<TCarBody> => {
 
         const updateCar = await prisma.car.update({ data: body, where: {id: carId}})
 

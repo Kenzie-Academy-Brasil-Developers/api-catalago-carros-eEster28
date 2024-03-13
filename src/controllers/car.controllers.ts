@@ -1,14 +1,11 @@
-import { inject, injectable } from "tsyringe"
-import { CarServices } from "../services/car.services";
-import { Request, Response } from "express";
+import { CarServices } from "../services/car.services"
+import { Request, Response } from "express"
 
-@injectable()
 export class CarController {
 
-    constructor(@inject("CarServices") private carServices: CarServices){}
+    private carServices: CarServices = new  CarServices()
 
     create = async (req: Request, res: Response): Promise<Response> => {
-
         const response = await this.carServices.createCar(req.body)
 
         return res.status(201).json(response)

@@ -5,7 +5,6 @@ import express, { json } from "express"
 import { HandleErrors } from "./middlewares/handleErrors.middleware"
 import { carRouter } from "./routes/car.routes"
 
-
 export const app = express()
 
 app.use(helmet())

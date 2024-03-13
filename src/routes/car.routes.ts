@@ -1,17 +1,13 @@
 import { Router } from "express"
-import { container } from "tsyringe"
-import { CarServices } from "../services/car.services"
 import { CarController } from "../controllers/car.controllers"
 import { CarMiddleware } from "../middlewares/car.middleware"
 import { carCreateSchema, carUpdateSchema } from "../schemas/car.schemas"
-
 
 export const carRouter = Router()
 
 const carMiddleware = new CarMiddleware()
 
-container.registerSingleton("CarServices", CarServices)
-const carControllers = container.resolve(CarController)
+const carControllers = new CarController()
 
 carRouter.post(
     "/",
